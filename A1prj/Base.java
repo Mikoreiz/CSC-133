@@ -1,8 +1,10 @@
 package com.mycompany.A1prj;
 
 public class Base extends FixedObject {
+    // Sequence number for the base
     private int seqNum;
 
+    // Constructor for the base class
     public Base(float x, float y, int seq) {
         this.setLocation(x, y);
         this.seqNum = seq;

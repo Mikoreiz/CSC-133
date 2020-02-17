@@ -5,8 +5,8 @@ public abstract class MoveableObject extends GameObject {
     private int speed;
 
     public void move() {
-        double deltaX = Math.cos(Math.toRadians(90 - heading)) * speed;
-        double deltaY = Math.sin(Math.toRadians(90 - heading)) * speed;
+        double deltaX = Math.round(Math.cos(Math.toRadians(90 - heading)) * speed);
+        double deltaY = Math.round(Math.sin(Math.toRadians(90 - heading)) * speed);
 
         setLocation((float) getLocation().getX() + deltaX, (float) getLocation().getY() + deltaY);
     }
@@ -24,7 +24,7 @@ public abstract class MoveableObject extends GameObject {
     }
 
     public void setSpeed(int spd) {
-        speed = spd;
+    	speed = spd;
     }
 
     public String toString() {

@@ -44,13 +44,13 @@ public class Game extends Form {
 						gw.changeDirection('r');
 						break;
 					case 'c':
-						gw.collisionCyborg();
+						gw.collision('c');
 						break;
 					case 'e':
 						gw.collisionEnergy();
 						break;
 					case 'g':
-						gw.collisionDrone();
+						gw.collision('g');
 						break;
 					case '1':
 						gw.hitBase(1);
@@ -90,6 +90,9 @@ public class Game extends Form {
 						break;
 					case 'x':
 						gw.exit();
+						break;
+					default:
+						System.out.println("Not a valid command");
 						break;
 					}
 				}

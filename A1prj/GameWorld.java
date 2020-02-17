@@ -13,10 +13,9 @@ public class GameWorld {
 	private ArrayList<GameObject> GameObjects;
 	Iterator<GameObject> iter;
 
-	private int lives = 3;
-	private int clock = 0;
+	private int lives;
+	private int clock;
 
-	@SuppressWarnings("unused")
 	private int lastBase = 4;
 
 	public GameWorld() {
@@ -25,6 +24,9 @@ public class GameWorld {
 	Cyborg player = new Cyborg((float) 70.0, (float) 70.0);
 
 	public void init() {
+
+		lives = 3;
+		clock = 0;
 
 		GameObjects = new ArrayList<>();
 		iter = GameObjects.iterator();
@@ -58,15 +60,21 @@ public class GameWorld {
 		if (curr > player.getMaxSpeed()) {
 			curr = player.getMaxSpeed();
 		}
-		player.setSpeed(curr);
+		if (curr <= 0) {
+			player.setSpeed(0);
+		} else {
+			player.setSpeed(curr);
+		}
 	}
 
 	public void changeDirection(char c) {
 		switch (c) {
 		case 'l':
 			player.left();
+			break;
 		case 'r':
 			player.right();
+			break;
 		}
 	}
 
@@ -80,12 +88,8 @@ public class GameWorld {
 		}
 	}
 
-	public void collisionCyborg() {
-		return;
-	}
-
-	public void collisionDrone() {
-		player.droneCollision();
+	public void collision(char c) {
+		player.collision(c);
 	}
 
 	public void hitBase(int n) {
@@ -98,17 +102,18 @@ public class GameWorld {
 		for (GameObject obj : GameObjects) {
 			if (obj instanceof MoveableObject) {
 				if (obj instanceof Cyborg) {
-					obj.steer();
+					((Cyborg) obj).steer();
+					((Cyborg) obj).setSteeringDirection(0);
 				} else {
-					obj.changeHeading();
+					((Drone) obj).changeHeading();
 				}
-				obj.move();
+				((MoveableObject) obj).move();
 			}
 		}
 
 		if (player.isDead()) {
-			lives--;
-			if (lives == 0) {
+			this.lives -= 1;
+			if (this.lives == 0) {
 				System.out.println("Game Over");
 				this.init();
 			} else {
